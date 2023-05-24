@@ -31,7 +31,7 @@ let eskuin = false
 let ezker = false
 radio.setGroup(1)
 radio.setTransmitSerialNumber(true)
-let kurba = 0
+let angelua = 0
 ezker = false
 eskuin = false
 basic.forever(function () {
@@ -49,18 +49,11 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    kurba = Math.abs(input.rotation(Rotation.Pitch))
-    if (kurba < 30 && kurba < -30) {
-        ezker = false
-        eskuin = false
-        basic.showLeds(`
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            # # # # #
-            `)
-    } else if (ezker || eskuin) {
+    if (ezker || eskuin) {
+        angelua = Math.abs(input.rotation(Rotation.Pitch))
         music.playMelody("C5 C - - - - - - ", 400)
+        if (angelua < 30 && angelua < -30) {
+            radio.sendNumber(2)
+        }
     }
 })
