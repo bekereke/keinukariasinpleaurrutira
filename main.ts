@@ -5,8 +5,10 @@ radio.onReceivedNumber(function (receivedNumber) {
     // MANILARRA NEURTU
     if (receivedNumber == 0) {
         ezker = true
+        eskuin = false
     } else if (receivedNumber == 1) {
         eskuin = true
+        ezker = false
     } else if (receivedNumber == 2) {
         ezker = false
         eskuin = false
