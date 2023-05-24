@@ -17,23 +17,14 @@ radio.onReceivedNumber(function (receivedNumber) {
 })
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
-    radio.sendValue("kurba_manilarra", 1)
     radio.sendNumber(0)
 })
 input.onButtonPressed(Button.B, function () {
     basic.clearScreen()
-    radio.sendValue("kurba_manilarra", 1)
     radio.sendNumber(1)
-})
-radio.onReceivedValue(function (name, value) {
-    if (name == "kurba_manilarra" && value == 0) {
-        ezker = false
-        eskuin = false
-    }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     basic.clearScreen()
-    radio.sendValue("kurba_manilarra", 0)
     radio.sendNumber(2)
 })
 let eskuin = false
