@@ -44,25 +44,22 @@ let kurba = false
 radio.setGroup(1)
 kurba = false
 ezker = false
-basic.showLeds(`
-    # # # # #
-    # # # # #
-    # # # # #
-    # # # # #
-    # # # # #
-    `)
 basic.forever(function () {
     if (ezker) {
         basic.showArrow(ArrowNames.West)
         basic.clearScreen()
         basic.pause(100)
     }
+})
+basic.forever(function () {
+    if (kurba) {
+        music.playMelody("C5 C - - - - - - ", 400)
+    }
+})
+basic.forever(function () {
     if (eskuin) {
         basic.showArrow(ArrowNames.East)
         basic.clearScreen()
         basic.pause(100)
-    }
-    if (kurba) {
-        music.playMelody("C5 C - - - - - - ", 400)
     }
 })
