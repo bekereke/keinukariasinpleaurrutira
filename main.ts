@@ -30,15 +30,36 @@ radio.onReceivedNumber(function (receivedNumber) {
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
     radio.sendNumber(0)
+    basic.showLeds(`
+        . . . # .
+        . . # . .
+        . # # . .
+        # . # . .
+        . . # . .
+        `)
 })
 input.onButtonPressed(Button.B, function () {
     basic.clearScreen()
     radio.sendNumber(1)
+    basic.showLeds(`
+        . # . . .
+        . . # . .
+        . . # # .
+        . . # . #
+        . . # . .
+        `)
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     basic.clearScreen()
     // KEINUKARIA GELDITU
     radio.sendNumber(2)
+    basic.showLeds(`
+        . . . . .
+        # # # # #
+        . . # . .
+        . . # . .
+        . . # . .
+        `)
 })
 let neurtu_inklinazioa = false
 let eskuin = false
@@ -49,6 +70,13 @@ let angelua = 0
 ezker = false
 eskuin = false
 neurtu_inklinazioa = false
+basic.showLeds(`
+    . . . . .
+    # # # # #
+    . . # . .
+    . . # . .
+    . . # . .
+    `)
 basic.forever(function () {
     if (ezker) {
         basic.showArrow(ArrowNames.West)
@@ -74,6 +102,13 @@ basic.forever(function () {
         if (angelua < 30 && angelua < -30) {
             // KEINUKARIA GELDITU
             radio.sendNumber(2)
+            basic.showLeds(`
+                . . . . .
+                # # # # #
+                . . # . .
+                . . # . .
+                . . # . .
+                `)
         }
     }
 })
