@@ -6,7 +6,6 @@ radio.onReceivedNumber(function (receivedNumber) {
     } else if (receivedNumber == 2) {
         ezker = false
         eskuin = false
-        kurba = false
     }
     basic.showLeds(`
         # # # # #
@@ -18,32 +17,32 @@ radio.onReceivedNumber(function (receivedNumber) {
 })
 input.onButtonPressed(Button.A, function () {
     basic.clearScreen()
-    radio.sendValue("kurba", 1)
+    radio.sendValue("kurba_manilarra", 1)
     radio.sendNumber(0)
 })
 input.onButtonPressed(Button.B, function () {
     basic.clearScreen()
-    radio.sendValue("kurba", 1)
+    radio.sendValue("kurba_manilarra", 1)
     radio.sendNumber(1)
 })
 radio.onReceivedValue(function (name, value) {
-    if (name == "kurba" && value == 1) {
-        kurba = true
-    } else if (name == "kurba" && value == 0) {
-        kurba = false
+    if (name == "kurba_manilarra" && value == 0) {
+        ezker = false
+        eskuin = false
     }
 })
 input.onLogoEvent(TouchButtonEvent.Pressed, function () {
     basic.clearScreen()
-    radio.sendValue("kurba", 0)
+    radio.sendValue("kurba_manilarra", 0)
     radio.sendNumber(2)
 })
 let eskuin = false
 let ezker = false
-let kurba = false
 radio.setGroup(1)
-kurba = false
+radio.setTransmitSerialNumber(true)
+let kurba = 0
 ezker = false
+eskuin = false
 basic.forever(function () {
     if (ezker) {
         basic.showArrow(ArrowNames.West)
@@ -52,14 +51,25 @@ basic.forever(function () {
     }
 })
 basic.forever(function () {
-    if (kurba) {
-        music.playMelody("C5 C - - - - - - ", 400)
-    }
-})
-basic.forever(function () {
     if (eskuin) {
         basic.showArrow(ArrowNames.East)
         basic.clearScreen()
         basic.pause(100)
+    }
+})
+basic.forever(function () {
+    kurba = Math.abs(input.rotation(Rotation.Pitch))
+    if (kurba < 30 && kurba < -30) {
+        ezker = false
+        eskuin = false
+        basic.showLeds(`
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # #
+            `)
+    } else if (ezker || eskuin) {
+        music.playMelody("C5 C - - - - - - ", 400)
     }
 })

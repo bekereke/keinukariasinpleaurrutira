@@ -1,70 +1,67 @@
-def on_received_number(receivedNumber):
-    global ezker, eskuin, kurba
-    if receivedNumber == 0:
-        ezker = True
-    elif receivedNumber == 1:
-        eskuin = True
-    elif receivedNumber == 2:
-        ezker = False
-        eskuin = False
-        kurba = False
-    basic.show_leds("""
+radio.onReceivedNumber(function (receivedNumber) {
+    if (receivedNumber == 0) {
+        ezker = true
+    } else if (receivedNumber == 1) {
+        eskuin = true
+    } else if (receivedNumber == 2) {
+        ezker = false
+        eskuin = false
+        kurba = false
+    }
+    basic.showLeds(`
         # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-                # # # # #
-    """)
-radio.on_received_number(on_received_number)
-
-def on_button_pressed_a():
-    basic.clear_screen()
-    radio.send_value("kurba", 1)
-    radio.send_number(0)
-input.on_button_pressed(Button.A, on_button_pressed_a)
-
-def on_button_pressed_b():
-    basic.clear_screen()
-    radio.send_value("kurba", 1)
-    radio.send_number(1)
-input.on_button_pressed(Button.B, on_button_pressed_b)
-
-def on_received_value(name, value):
-    global kurba
-    if name == "kurba" and value == 1:
-        kurba = True
-    elif name == "kurba" and value == 0:
-        kurba = False
-radio.on_received_value(on_received_value)
-
-def on_logo_pressed():
-    basic.clear_screen()
-    radio.send_value("kurba", 0)
-    radio.send_number(2)
-input.on_logo_event(TouchButtonEvent.PRESSED, on_logo_pressed)
-
-eskuin = False
-ezker = False
-kurba = False
-radio.set_group(1)
-kurba = False
-ezker = False
-
-def on_forever():
-    if ezker:
-        basic.show_arrow(ArrowNames.WEST)
-        basic.clear_screen()
+        # # # # #
+        # # # # #
+        # # # # #
+        # # # # #
+        `)
+})
+input.onButtonPressed(Button.A, function () {
+    basic.clearScreen()
+    radio.sendValue("kurba", input.rotation(Rotation.Pitch))
+    radio.sendNumber(0)
+})
+input.onButtonPressed(Button.AB, function () {
+    radio.sendValue("serial number", control.deviceSerialNumber())
+})
+input.onButtonPressed(Button.B, function () {
+    basic.clearScreen()
+    radio.sendValue("kurba", input.rotation(Rotation.Pitch))
+    radio.sendNumber(1)
+})
+radio.onReceivedValue(function (name, value) {
+    if (name == "kurba") {
+        kurba = value
+    }
+})
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    basic.clearScreen()
+    radio.sendValue("kurba", 0)
+    radio.sendNumber(2)
+})
+let eskuin = false
+let ezker = false
+let kurba = 0
+radio.setGroup(1)
+radio.setTransmitSerialNumber(true)
+kurba = false
+ezker = false
+basic.forever(function () {
+    if (ezker) {
+        basic.showArrow(ArrowNames.West)
+        basic.clearScreen()
         basic.pause(100)
-basic.forever(on_forever)
-
-def on_forever2():
-    if kurba:
-        music.play_melody("C5 C - - - - - - ", 400)
-basic.forever(on_forever2)
-
-def on_forever3():
-    if eskuin:
-        basic.show_arrow(ArrowNames.EAST)
-        basic.clear_screen()
+    }
+})
+basic.forever(function () {
+    if (kurba) {
+        music.playMelody("C5 C - - - - - - ", 400)
+    }
+})
+basic.forever(function () {
+    if (eskuin) {
+        basic.showArrow(ArrowNames.East)
+        basic.clearScreen()
         basic.pause(100)
-basic.forever(on_forever3)
+    }
+})
