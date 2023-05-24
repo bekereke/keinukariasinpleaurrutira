@@ -66,12 +66,21 @@ input.onLogoEvent(TouchButtonEvent.Pressed, function () {
 let neurtu_inklinazioa = false
 let eskuin = false
 let ezker = false
+basic.showString("Smart Bizikleta")
+basic.showLeds(`
+    . . # # #
+    # . . # .
+    # # # # .
+    # . . # .
+    # . . # .
+    `)
 radio.setGroup(1)
 radio.setTransmitSerialNumber(true)
 let angelua = 0
 ezker = false
 eskuin = false
 neurtu_inklinazioa = false
+basic.pause(1000)
 basic.showLeds(`
     . . . . .
     # # # # #
