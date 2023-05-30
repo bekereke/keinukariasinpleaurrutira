@@ -108,7 +108,8 @@ basic.forever(function () {
 })
 basic.forever(function () {
     if (neurtu_inklinazioa) {
-        angelua = Math.abs(input.rotation(Rotation.Pitch))
+        // -180º eta 180º bitarteko balioa ematen du
+        angelua = Math.abs(input.rotation(Rotation.Roll))
         music.playMelody("C5 C - - - - - - ", 400)
         if (angelua < 30 && angelua < -30) {
             // KEINUKARIA GELDITU
